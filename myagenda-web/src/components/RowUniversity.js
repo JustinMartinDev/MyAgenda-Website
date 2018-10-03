@@ -1,6 +1,6 @@
-import {Component} from "react";
+import React, {Component} from "react";
 import {Button, Fa} from 'mdbreact';
-import StateLogo from './StateLogo';
+import StateLogo from './StateLogo.js';
 
 class RowUniversity extends Component {
     constructor(props) {
@@ -17,13 +17,14 @@ class RowUniversity extends Component {
         return(
             <React.Fragment>
                 <tr>
-                    <td>this.university.university</td>
+                    <td className={"center-vertical"}>{this.university.university}</td>
                     <td>
-                        <Button color="pink" onClick={this.clickButton.bind(this, this.job.url)}>
+                        <Button color="pink" onClick={this.clickButton.bind(this, this.university.resourcesFile)}>
                             <Fa icon="group" className="mr-1"/>
-                        </Button> Liste des groupes
+                            Liste des groupes
+                        </Button>
                     </td>
-                    <td><StateLogo color={this.job.color}/></td>
+                    <td><StateLogo loginUrl={this.university.loginUrl}/></td>
                 </tr>
             </React.Fragment>
         )

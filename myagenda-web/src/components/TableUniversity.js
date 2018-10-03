@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import {TableHead, TableBody, Card, CardBody, Container, Table, Row, Col} from 'mdbreact';
 import constant from '../Constant.js';
+import RowUniversity from "./RowUniversity";
 
 class TableUniversity extends Component {
     constructor(props) {
@@ -7,19 +9,18 @@ class TableUniversity extends Component {
         this.state = {
             error: null,
             isLoaded: false,
-            university: null
+            universities: null
         };
     }
 
     componentDidMount() {
-        fetch(constant.myAgendaResURL+"resources.js")
+        fetch(constant.myAgendaResURL+"resources.json")
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result);
                     this.setState({
                         isLoaded: true,
-                        university: result
+                        universities: result
                     })
                 },
                 // Note: it's important to handle errors here
@@ -34,7 +35,7 @@ class TableUniversity extends Component {
     }
 
     render() {
-        const { error, isLoaded, university} = this.state;
+        const { error, isLoaded, universities} = this.state;
         if (error) {
             return(
                 <Card color="red lighten-1" text="white" className="text-left">
@@ -58,21 +59,20 @@ class TableUniversity extends Component {
                         <Col md="12">
                             <Card>
                                 <CardBody>
-                                    <h2 className="h2-responsive pb-4">Build View :</h2>
                                     <div style={{'display': 'block', 'overflowY': 'auto'}}>
-                                        <Table responsive>
-                                            <thead className="mdb-color lighten-4">
+                                        <Table responsive color="red">
+                                            <TableHead color="red" textWhite>
                                             <tr>
                                                 <th className="th-lg">Nom</th>
                                                 <th className="th-lg">Groups</th>
                                                 <th className="th-lg">Status</th>
                                             </tr>
-                                            </thead>
-                                            <tbody>
-                                            {university.map(job => (
+                                            </TableHead>
+                                            <TableBody>
+                                            {universities.map(university => (
                                                 <RowUniversity university={university}/>
                                             ))}
-                                            </tbody>
+                                            </TableBody>
                                         </Table>
                                     </div>
                                 </CardBody>

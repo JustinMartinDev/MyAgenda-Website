@@ -1,4 +1,4 @@
-var myAgendaResURL = "https://github.com/Pyozer/MyAgenda_Flutter/tree/master/res/";
+var myAgendaResURL = "https://raw.githubusercontent.com/Pyozer/MyAgenda_Flutter/master/res/agendas/"    ;
 
 const constant = {myAgendaResURL};
 
