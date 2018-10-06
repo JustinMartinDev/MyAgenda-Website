@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {TableHead, TableBody, Card, CardBody, Container, Table, Row, Col} from 'mdbreact';
-import constant from '../Constant.js';
+import constant from '../../Constant.js';
 import RowUniversity from "./RowUniversity";
 
 class TableUniversity extends Component {

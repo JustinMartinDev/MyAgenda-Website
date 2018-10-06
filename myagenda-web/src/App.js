@@ -4,7 +4,7 @@ import './App.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
-import TableUniversity from "./components/TableUniversity";
+import TableUniversity from "./components/ServerState/TableUniversity";
 
 class App extends Component {
   render() {

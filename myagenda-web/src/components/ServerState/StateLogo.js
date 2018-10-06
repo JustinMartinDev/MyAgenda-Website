@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {HashLoader} from 'react-spinners';
+import BadgeIcon from "./BadgeIcon";
 
 class StateLogo extends Component {
     constructor(props) {
@@ -35,13 +36,13 @@ class StateLogo extends Component {
     render() {
         const {error, loading} = this.state;
         if(loading) {
-           return <HashLoader color={'#fffa07'} loading={this.state.loading}/>;
+           return <HashLoader color={'#000000'} loading={loading}/>;
         }
         else if(!error){
-            return <HashLoader color={'#00bc03'} loading={false}/>;
+            return <BadgeIcon color='green' icon='thumbs-up'/>
         }
         else {
-            return <HashLoader color={'#c0392b'} loading={false}/>;
+            return <BadgeIcon error={error} color='red' icon='thumbs-down'/>
         }
        // return <BadgeIcon color='grey' icon='minus'/>;
     }
