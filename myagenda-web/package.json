@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "material-design-icons": "^3.0.1",
+    "material-icon": "^0.1.4",
     "mdbreact": "latest",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-router": "^4.3.1",
     "react-scripts": "1.1.5",
     "react-simple-popover": "^0.2.4",
     "react-spinners": "^0.4.5"
@@ -15,5 +18,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1"
   }
 }

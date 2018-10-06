@@ -10,7 +10,7 @@ class RowUniversity extends Component {
 
     clickButton(url, e) {
         e.preventDefault();
-        window.open(url, "_blank") //to open new page
+        window.open(url, "_blank") //to open new pages
     }
 
     render(){
@@ -24,6 +24,7 @@ class RowUniversity extends Component {
                             Liste des groupes
                         </Button>
                     </td>
+                    <td>{new Date().toUTCString()}</td>
                     <td><StateLogo loginUrl={this.university.loginUrl}/></td>
                 </tr>
             </React.Fragment>

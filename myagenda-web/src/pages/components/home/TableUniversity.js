@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {TableHead, TableBody, Card, CardBody, Container, Table, Row, Col} from 'mdbreact';
-import constant from '../../Constant.js';
+import constant from '../../../Constant.js';
 import RowUniversity from "./RowUniversity";
 
 class TableUniversity extends Component {
@@ -25,7 +25,7 @@ class TableUniversity extends Component {
                 },
                 // Note: it's important to handle errors here
                 // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
+                // exceptions from actual bugs in pages.
                 (error) => {
                     this.setState({
                         isLoaded: true,
@@ -65,6 +65,7 @@ class TableUniversity extends Component {
                                             <tr>
                                                 <th className="th-lg">Nom</th>
                                                 <th className="th-lg">Groups</th>
+                                                <th className="th-lg">Dernière mise à jours</th>
                                                 <th className="th-lg">Status</th>
                                             </tr>
                                             </TableHead>
