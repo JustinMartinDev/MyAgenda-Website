@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import LoginStep from './components/add/LoginStep';
 
 const styles = theme => ({
     root: {
@@ -28,20 +29,6 @@ const styles = theme => ({
 function getSteps() {
     return ['Verification de l\'url de login', 'Create an ad group', 'Create an ad'];
 }
-
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            return <h1>first step</h1>;
-        case 1:
-            return <h1>second step</h1>;
-        case 2:
-            return <h1>last step</h1>;
-        default:
-            return <h1>Unknown step</h1>;
-    }
-}
-
 class AddUniversity extends Component {
     constructor(props) {
         super(props);
@@ -50,6 +37,19 @@ class AddUniversity extends Component {
             activeStep: 0,
         };
     }
+
+    getStepContent = (step) => {
+        switch (step) {
+            case 0:
+                return <LoginStep handleNext={this.handleNext}/>;
+            case 1:
+                return <h1>second step</h1>;
+            case 2:
+                return <h1>last step</h1>;
+            default:
+                return <h1>Unknown step</h1>;
+        }
+    };
 
     handleNext = () => {
         this.setState(state => ({
@@ -70,7 +70,7 @@ class AddUniversity extends Component {
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
                                 <StepContent>
-                                    {getStepContent(index)}
+                                    {this.getStepContent(index)}
                                     <div className={classes.actionsContainer}>
                                         <div>
                                             <Button
@@ -91,9 +91,6 @@ class AddUniversity extends Component {
                 {activeStep === steps.length && (
                     <Paper square elevation={0} className={classes.resetContainer}>
                         <Typography>All steps completed - you&quot;re finished</Typography>
-                        <Button onClick={this.handleReset} className={classes.button}>
-                            Reset
-                        </Button>
                     </Paper>
                 )}
             </div>
