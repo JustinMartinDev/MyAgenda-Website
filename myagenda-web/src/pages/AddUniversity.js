@@ -41,7 +41,7 @@ class AddUniversity extends Component {
     getStepContent = (step) => {
         switch (step) {
             case 0:
-                return <LoginStep handleNext={this.handleNext}/>;
+                return <LoginStep handleNext={this.handleNext} url={this.universityData.loginUrl}/>;
             case 1:
                 return <h1>second step</h1>;
             case 2:
@@ -73,14 +73,6 @@ class AddUniversity extends Component {
                                     {this.getStepContent(index)}
                                     <div className={classes.actionsContainer}>
                                         <div>
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={this.handleNext}
-                                                className={classes.button}
-                                            >
-                                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                            </Button>
                                         </div>
                                     </div>
                                 </StepContent>
