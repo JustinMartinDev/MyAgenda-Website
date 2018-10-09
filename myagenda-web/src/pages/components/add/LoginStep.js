@@ -35,7 +35,6 @@ class LoginStep extends Component{
             axios({
                 method:'get',
                 url:url,
-                responseType:'document'
             })
             .then(function (response) {
                 console.log(response);
@@ -83,7 +82,7 @@ class LoginStep extends Component{
         if(!error) {
             return (
                 <LoginStepForm loading={startScript} verify={this.verify} url={url}/>
-            );
+                );
         }
         else {
             return (
