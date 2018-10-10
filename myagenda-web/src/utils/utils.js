@@ -24,7 +24,7 @@ class RequestObject {
             });
     };
     getRessourcesAsJson = (url, component) => {
-        fetch(url, this.header)
+        fetch(url)
             .then(res => res.json())
             .then((result) => {
                     if(this.isDev) console.log(result);
@@ -33,7 +33,7 @@ class RequestObject {
                 (error) => {
                     if(this.isDev) console.log(error.message);
                     if(this.isDev) component.notLoaded(error.message);
-                    else component.notVerified(url, "Erreur impossible de récupérer le fichier ressources");
+                    else component.notLoaded(url, "Erreur impossible de récupérer le fichier ressources");
                 });
     };
 

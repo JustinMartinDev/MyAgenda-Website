@@ -43,12 +43,12 @@ class LoginStep extends Component{
     };
 
     hasBeenVerified = (url) =>{
-        this.state = {
+        this.setState({
             errorMessage: "no message",
             error: false,
             startScript: false,
             url: url
-        };
+        });
         this.props.handleNext();
     };
     notVerified = (url, error) => {

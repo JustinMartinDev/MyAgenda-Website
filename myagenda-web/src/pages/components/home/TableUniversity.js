@@ -34,7 +34,7 @@ class TableUniversity extends Component {
     };
 
     componentDidMount() {
-        reqObj.getRessourcesAsJson(constant.myAgendaResURL+"resources.json", this);
+        reqObj.getRessourcesAsJson(constant.myAgendaResURL + "resources.json", this);
     }
 
     render() {
