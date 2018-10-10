@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import {Row, Container} from 'mdbreact';
 import {ClimbingBoxLoader} from 'react-spinners';
 import { css } from 'react-emotion';
-import axios from 'axios';
-
-import "../../utils.js";
-import BoxMessage from "../../utils";
+import BoxMessage from '../utils/BoxMessage'
+import reqObj from '../../../utils/utils';
 
 const override = css`
     position: relative;
@@ -24,50 +22,17 @@ class LoginStep extends Component{
     }
 
     verify = () => {
-        var url = document.getElementById("idUrl").value;
-        this.setState({
-            errorMessage: "no message",
-            error: false,
-            startScript: true,
-            url: url
-        });
+        let url = document.getElementById("idUrl").value;
         if(url.includes("http")) {
-            axios({
-                method:'get',
-                url:url,
-            })
-            .then(function (response) {
-                console.log(response);
+            reqObj.checkUrlValidate(url, this);
+            this.setState({
+                errorMessage: "no message",
+                error: false,
+                startScript: true,
+                url: url
             });
-            /*fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'text/html,application/xhtml+xml,application/xml'
-                    }
-                })
-                .then(
-                    (result) => {
-                        console.log(result);
-                        this.setState({
-                            errorMessage: "no message",
-                            error: false,
-                            startScript: false,
-                            url: url
-                        });
-                        this.props.handleNext();
-                    },
-                    // Note: it's important to handle errors here
-                    // instead of a catch() block so that we don't swallow
-                    // exceptions from actual bugs in pages.
-                    (error) => {
-                        console.log("error : " + error);
-                        /*this.setState({
-                            errorMessage: error,
-                            error: true,
-                            startScript: false
-                        });
-                    });*/
-        }else{
+        }
+        else{
             this.setState({
                 errorMessage: "URL non valide   ",
                 error: true,
@@ -77,12 +42,30 @@ class LoginStep extends Component{
         }
     };
 
+    hasBeenVerified = (url) =>{
+        this.state = {
+            errorMessage: "no message",
+            error: false,
+            startScript: false,
+            url: url
+        };
+        this.props.handleNext();
+    };
+    notVerified = (url, error) => {
+        this.setState({
+            errorMessage: error,
+            error: true,
+            startScript: false,
+            url: url
+        });
+    };
+
     render(){
         const {errorMessage ,error, startScript, url} = this.state;
         if(!error) {
             return (
                 <LoginStepForm loading={startScript} verify={this.verify} url={url}/>
-                );
+            );
         }
         else {
             return (
@@ -94,6 +77,7 @@ class LoginStep extends Component{
         }
     }
 }
+
 function LoginStepForm(props) {
     return(
         <Container>

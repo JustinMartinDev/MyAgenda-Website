@@ -2,51 +2,46 @@ import React, { Component } from 'react';
 import {TableHead, TableBody, Card, CardBody, Container, Table, Row, Col} from 'mdbreact';
 import constant from '../../../Constant.js';
 import RowUniversity from "./RowUniversity";
+import reqObj from '../../../utils/utils';
+import BoxMessage from "../utils/BoxMessage";
 
 class TableUniversity extends Component {
     constructor(props) {
         super(props);
         this.state = {
             error: null,
+            errorMessage : null,
             isLoaded: false,
             universities: null
         };
     }
 
+    hasBeenLoaded = (result) => {
+        this.setState({
+            error: null,
+            errorMessage: null,
+            isLoaded: true,
+            universities: result
+        });
+    };
+    notLoaded= (error) => {
+        this.setState({
+            error: true,
+            errorMessage: error,
+            isLoaded: true,
+            universities: null
+        });
+    };
+
     componentDidMount() {
-        fetch(constant.myAgendaResURL+"resources.json")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        universities: result
-                    })
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in pages.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error: error,
-                    });
-                });
+        reqObj.getRessourcesAsJson(constant.myAgendaResURL+"resources.json", this);
     }
 
     render() {
-        const { error, isLoaded, universities} = this.state;
+        const { error, errorMessage, isLoaded, universities} = this.state;
         if (error) {
             return(
-                <Card color="red lighten-1" text="white" className="text-left">
-                    <CardBody>
-                        Error with the api call :
-                        <ul>
-                            <li>Action : "liste universités"  </li>
-                            <li>Message : {error.message}</li>
-                        </ul>
-                    </CardBody>
-                </Card>
+                <BoxMessage message={errorMessage} classColor="red lighten-1"/>
             );
         }
         else if(!isLoaded){
@@ -83,8 +78,6 @@ class TableUniversity extends Component {
                 </Container>
             )
         }
-
-
     }
 }
 
