@@ -31,7 +31,7 @@ class FormUniversity extends Component {
             idEnt: document.getElementById("ent-id").value,
             passwordEnt: document.getElementById("ent-password").value
         };
-        this.props.history.push('/add/'+params.name, params);
+        this.props.history.push('/AddUniversity/'+params.name, params);
     }
     render() {
             return(

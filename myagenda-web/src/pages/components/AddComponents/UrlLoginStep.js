@@ -10,13 +10,13 @@ const override = css`
     margin: auto;
 `;
 
-class LoginStep extends Component{
+class UrlLoginStep extends Component{
     constructor(props){
         super(props);
         this.state = {
             errorMessage: "no message",
             error: false,
-            startScript: false,
+            loading: false,
             url: this.props.url
         };
     }
@@ -28,7 +28,7 @@ class LoginStep extends Component{
             this.setState({
                 errorMessage: "no message",
                 error: false,
-                startScript: true,
+                loading: true,
                 url: url
             });
         }
@@ -36,7 +36,7 @@ class LoginStep extends Component{
             this.setState({
                 errorMessage: "URL non valide   ",
                 error: true,
-                startScript: false,
+                loading: false,
                 url: ""
             });
         }
@@ -46,32 +46,33 @@ class LoginStep extends Component{
         this.setState({
             errorMessage: "no message",
             error: false,
-            startScript: false,
+            loading: false,
             url: url
         });
+        this.props.saveUrl(url);
         this.props.handleNext();
     };
     notVerified = (url, error) => {
         this.setState({
             errorMessage: error,
             error: true,
-            startScript: false,
+            loading: false,
             url: url
         });
     };
 
     render(){
-        const {errorMessage ,error, startScript, url} = this.state;
+        const {errorMessage ,error, loading, url} = this.state;
         if(!error) {
             return (
-                <LoginStepForm loading={startScript} verify={this.verify} url={url}/>
+                <LoginStepForm loading={loading} verify={this.verify} url={url}/>
             );
         }
         else {
             return (
                 <React.Fragment>
                     <BoxMessage message={errorMessage} classColor="red lighten-1"/>
-                    <LoginStepForm url="" loading={startScript} verify={this.verify}/>
+                    <LoginStepForm url="" loading={loading} verify={this.verify}/>
                 </React.Fragment>
             );
         }
@@ -106,4 +107,4 @@ function LoginStepForm(props) {
             </Row>
         </Container>);
 }
-export default LoginStep;
+export default UrlLoginStep;

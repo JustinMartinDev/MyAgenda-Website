@@ -4,11 +4,11 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import LoginStep from './components/add/LoginStep';
+import UrlLoginStep from './components/AddComponents/UrlLoginStep';
+import LoginStep from "./components/AddComponents/LoginStep";
 
 const styles = theme => ({
     root: {
@@ -41,14 +41,18 @@ class AddUniversity extends Component {
     getStepContent = (step) => {
         switch (step) {
             case 0:
-                return <LoginStep handleNext={this.handleNext} url={this.universityData.loginUrl}/>;
+                return <UrlLoginStep saveUrl={this.saveUrl} handleNext={this.handleNext} url={this.universityData.loginUrl}/>;
             case 1:
-                return <h1>second step</h1>;
+                return <LoginStep url={this.universityData.loginUrl} identifiant={this.universityData.idEnt} password={this.universityData.passwordEnt}/>;
             case 2:
                 return <h1>last step</h1>;
             default:
                 return <h1>Unknown step</h1>;
         }
+    };
+
+    saveUrl = (url) => {
+        this.universityData.loginUrl = url;
     };
 
     handleNext = () => {

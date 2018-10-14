@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../images/icon_circle.png';
-import TableUniversity from "./components/home/TableUniversity";
-import FormUniversity from "./components/home/FormUniversity";
+import TableUniversity from "./components/HomeComponents/TableUniversity";
+import FormUniversity from "./components/HomeComponents/FormUniversity";
 
 
 class Home extends Component {
