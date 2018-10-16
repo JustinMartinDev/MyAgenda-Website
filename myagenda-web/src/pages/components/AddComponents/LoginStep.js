@@ -3,7 +3,7 @@ import {Row, Container} from 'mdbreact';
 import {ClimbingBoxLoader} from 'react-spinners';
 import { css } from 'react-emotion';
 import BoxMessage from '../utils/BoxMessage'
-import reqObj from '../../../utils/utils';  
+import reqObj from '../../../utils/RequestObject';
 
 const override = css`
     position: relative;

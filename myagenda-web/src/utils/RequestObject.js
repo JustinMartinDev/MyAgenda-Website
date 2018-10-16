@@ -1,5 +1,3 @@
-import $ from "jquery";
-
 class RequestObject {
     constructor(isDev){
         console.log("Mode Request Dev : " + isDev);
@@ -7,9 +5,7 @@ class RequestObject {
         if(isDev){
             this.header = {
                 "Access-Control-Allow-Origin": "*",
-                "mode": "no-cors",
-                "Content-Type" : "text/html",
-                "X-Content-Type-Options" : "nosniff"
+                "mode": "no-cors"
             };
         }
         else this.header  = {};
@@ -40,10 +36,22 @@ class RequestObject {
                     else component.notLoaded(url, "Erreur impossible de récupérer le fichier ressources");
                 });
     };
-    getHTMLPage = (url, component, params) => {
-        fetch(url, this.header)
+    getHTMLPage = (url, component) => {
+        var headers = new Headers();
+
+        headers.append('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'); // This one is enough for GET requests
+        headers.append('Content-Type', 'text/plain'); // This one sends body
+        headers.append('Access-Control-Allow-Origin', '*');
+        fetch(url, {
+            method : 'GET',
+            credentials : "same-origin",
+            mode : "no-cors",
+            redirect : "follow",
+            headers : headers
+        })
             .then(function(response){
-                return response.text();
+                console.log(response);
+                response.text();
             })
             .then((body) => {
                     if(this.isDev){
@@ -58,6 +66,7 @@ class RequestObject {
                 }*/
             );
     };
+   // login(url, component, params)
 }
 var reqObj = new RequestObject(true);
 

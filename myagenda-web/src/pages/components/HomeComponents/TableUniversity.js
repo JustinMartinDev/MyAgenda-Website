@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {TableHead, TableBody, Card, CardBody, Container, Table, Row, Col} from 'mdbreact';
 import constant from '../../../Constant.js';
 import RowUniversity from "./RowUniversity";
-import reqObj from '../../../utils/utils';
+import reqObj from '../../../utils/RequestObject';
 import BoxMessage from "../utils/BoxMessage";
 
 class TableUniversity extends Component {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {HashLoader} from 'react-spinners';
 import BadgeIcon from "./BadgeIcon";
-import reqObj from '../../../utils/utils';
+import reqObj from '../../../utils/RequestObject';
 
 class StateLogo extends Component {
     constructor(props) {
