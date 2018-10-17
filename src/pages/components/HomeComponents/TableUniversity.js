@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {TableHead, TableBody, Card, CardBody, Container, Table, Row, Col} from 'mdbreact';
 import constant from '../../../Constant.js';
 import RowUniversity from "./RowUniversity";
-import reqObj from '../../../utils/RequestObject';
+import myAgendaAPI from "../../../utils/MyAgenda-API";
+import reqObj from "../../../utils/RequestObject";
 import BoxMessage from "../utils/BoxMessage";
 
 class TableUniversity extends Component {
@@ -33,8 +34,15 @@ class TableUniversity extends Component {
         });
     };
 
+    response = (result, hasError) =>{
+        if(hasError)
+            this.notLoaded(result.error);
+        else
+            this.hasBeenLoaded(result.message.json());
+    };
     componentDidMount() {
-        reqObj.getRessourcesAsJson(constant.myAgendaResURL + "resources.json", this);
+        myAgendaAPI.redirectJSON(constant.myAgendaResURL + "resources.json", this.response);
+        //reqObj.getHTMLPage("https://www.facebook.com");
     }
 
     render() {

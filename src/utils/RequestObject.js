@@ -36,34 +36,28 @@ class RequestObject {
                     else component.notLoaded(url, "Erreur impossible de récupérer le fichier ressources");
                 });
     };
-    getHTMLPage = (url, component) => {
-        var headers = new Headers();
-
-        headers.append('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'); // This one is enough for GET requests
-        headers.append('Content-Type', 'text/plain'); // This one sends body
-        headers.append('Access-Control-Allow-Origin', '*');
-        fetch(url, {
+    getHTMLPage = (url) => {
+        //var urlTarget = "http://localhost:3001/api/redirectURL/"+url.splice("https")[0];
+        fetch("http://localhost:3001/api/redirectURL/", {
             method : 'GET',
-            credentials : "same-origin",
-            mode : "no-cors",
-            redirect : "follow",
-            headers : headers
+            body : {url: url},
+            headers : this.headers
         })
             .then(function(response){
                 console.log(response);
-                response.text();
+                //response.text();
             })
             .then((body) => {
                     if(this.isDev){
                         console.log(body);
                     }
                    //component.htmlLoaded(url, result);
-                }
-                /*(error) => {
+                },
+                (error) => {
                     if(this.isDev) console.log(error.message);
-                    if(this.isDev) component.htmlError(error.message);
+                  //  if(this.isDev) component.htmlError(error.message);
                     ///else component.htmlError("Erreur lors de la requete"); //todo add request bug serveur open ticket
-                }*/
+                }
             );
     };
    // login(url, component, params)
