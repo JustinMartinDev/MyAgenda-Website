@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import {TableHead, TableBody, Card, CardBody, Container, Table, Row, Col} from 'mdbreact';
+import { TableHead, TableBody, Card, CardBody, Container, Table, Row, Col } from 'mdbreact';
 import constant from '../../../Constant.js';
 import RowUniversity from "./RowUniversity";
 import myAgendaAPI from "../../../utils/MyAgenda-API";
-import reqObj from "../../../utils/RequestObject";
 import BoxMessage from "../utils/BoxMessage";
 
 class TableUniversity extends Component {
@@ -11,7 +10,7 @@ class TableUniversity extends Component {
         super(props);
         this.state = {
             error: null,
-            errorMessage : null,
+            errorMessage: null,
             isLoaded: false,
             universities: null
         };
@@ -25,7 +24,7 @@ class TableUniversity extends Component {
             universities: result
         });
     };
-    notLoaded= (error) => {
+    notLoaded = (error) => {
         this.setState({
             error: true,
             errorMessage: error,
@@ -34,25 +33,23 @@ class TableUniversity extends Component {
         });
     };
 
-    response = (result, hasError) =>{
-        if(hasError)
-            this.notLoaded(result.error);
-        else
-            this.hasBeenLoaded(result.message.json());
-    };
     componentDidMount() {
-        myAgendaAPI.redirectJSON(constant.myAgendaResURL + "resources.json", this.response);
-        //reqObj.getHTMLPage("https://www.facebook.com");
+        myAgendaAPI.redirectJSON(constant.myAgendaResURL + "resources.json", (result, hasError) => {
+            if (hasError)
+                this.notLoaded(result.error);
+            else
+                this.hasBeenLoaded(result.message);
+        });
     }
 
     render() {
-        const { error, errorMessage, isLoaded, universities} = this.state;
+        const { error, errorMessage, isLoaded, universities } = this.state;
         if (error) {
-            return(
-                <BoxMessage message={errorMessage} classColor="red lighten-1"/>
+            return (
+                <BoxMessage message={errorMessage} classColor="red lighten-1" />
             );
         }
-        else if(!isLoaded){
+        else if (!isLoaded) {
             return (<p>loading .....</p>); //todo loading animated
         }
         else {
@@ -62,20 +59,20 @@ class TableUniversity extends Component {
                         <Col md="12">
                             <Card>
                                 <CardBody>
-                                    <div style={{'display': 'block', 'overflowY': 'auto'}}>
+                                    <div style={{ 'display': 'block', 'overflowY': 'auto' }}>
                                         <Table responsive color="red">
                                             <TableHead color="red" textWhite>
-                                            <tr>
-                                                <th className="th-lg">Nom</th>
-                                                <th className="th-lg">Groups</th>
-                                                <th className="th-lg">Dernière mise à jours</th>
-                                                <th className="th-lg">Status</th>
-                                            </tr>
+                                                <tr>
+                                                    <th className="th-lg">Nom</th>
+                                                    <th className="th-lg">Groups</th>
+                                                    <th className="th-lg">Dernière mise à jours</th>
+                                                    <th className="th-lg">Status</th>
+                                                </tr>
                                             </TableHead>
                                             <TableBody>
-                                            {universities.map(university => (
-                                                <RowUniversity university={university}/>
-                                            ))}
+                                                {universities.map((university, index) => (
+                                                    <RowUniversity university={university} key={index} />
+                                                ))}
                                             </TableBody>
                                         </Table>
                                     </div>
