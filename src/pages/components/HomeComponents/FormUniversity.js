@@ -23,7 +23,8 @@ class FormUniversity extends Component {
         });
     }
 
-    goToViewAddPage() {
+    goToViewAddPage(event) {
+        event.preventDefault();
         const params = {
             name: document.getElementById("name-univ").value,
             loginUrl: document.getElementById("url-login").value,
@@ -45,17 +46,19 @@ class FormUniversity extends Component {
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <ModalBody className="grey-text">
-                            <Input size="sm" id="name-univ" label="Nom de l'université" icon="university" group type="text" validate error="wrong" success="right"/>
-                            <Input size="sm" id="url-login" label="URL de connexion ENT" icon="globe" group type="url" validate error="wrong" success="right"/>
-                            <Input size="sm" id="url-agenda" label="URL de l'agenda" icon="globe" group type="url" validate error="wrong" success="right"/>
-                            <Input size="sm" id="ent-id" label="Identifiant ENT" icon="user" group type="text" validate error="wrong" success="right"/>
-                            <Input size="sm" id="ent-password" label="Mot de passe ENT" icon="lock" group type="password" validate error="wrong" success="right"/>
-                            <p>La procédure d'ajout peut prendre un peu de temps</p>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button className="red-color" onClick={this.goToViewAddPage} color="">Ajouter</Button>
-                        </ModalFooter>
+                        <form onSubmit={this.goToViewAddPageii}>
+                            <ModalBody className="grey-text">
+                                <Input size="sm" id="name-univ" label="Nom de l'université" icon="university" group type="text" validate error="wrong" required success="right"/>
+                                <Input size="sm" id="url-login" label="URL de connexion ENT" icon="globe" group type="url" validate error="wrong" required success="right"/>
+                                <Input size="sm" id="url-agenda" label="URL de l'agenda" icon="globe" group type="url" validate error="wrong" required success="right"/>
+                                <Input size="sm" id="ent-id" label="Identifiant ENT" icon="user" group type="text" validate error="wrong" required success="right"/>
+                                <Input size="sm" id="ent-password" label="Mot de passe ENT" icon="lock" group type="password" validate error="wrong" required success="right"/>
+                                <p>La procédure d'ajout peut prendre un peu de temps</p>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button type="submit" className="red-color" color="">Ajouter</Button>
+                            </ModalFooter>
+                        </form>
                     </Modal>
                 </React.Fragment>
             );

@@ -3,7 +3,8 @@ import {Row, Container} from 'mdbreact';
 import {ClimbingBoxLoader} from 'react-spinners';
 import { css } from 'react-emotion';
 import BoxMessage from '../utils/BoxMessage'
-import reqObj from '../../../utils/RequestObject';
+import myAgendaAPI from "../../../utils/MyAgenda-API";
+
 
 const override = css`
     position: relative;
@@ -21,25 +22,22 @@ class UrlLoginStep extends Component{
         };
     }
 
-    verify = () => {
+    verify = (event) => {
+        event.preventDefault();
+        this.setState({
+            errorMessage: "no message",
+            error: false,
+            loading: true,
+            url: url
+        });
         let url = document.getElementById("idUrl").value;
-        if(url.includes("http")) {
-            reqObj.checkUrlValidate(url, this);
-            this.setState({
-                errorMessage: "no message",
-                error: false,
-                loading: true,
-                url: url
-            });
-        }
-        else{
-            this.setState({
-                errorMessage: "URL non valide   ",
-                error: true,
-                loading: false,
-                url: ""
-            });
-        }
+        myAgendaAPI.redirectURL(url, (result) => {
+            console.log(result);
+            if (result.hasOwnProperty("error"))
+                this.notVerified(url, result.message);
+            else
+                this.hasBeenVerified(url);
+        });
     };
 
     hasBeenVerified = (url) =>{
@@ -83,7 +81,7 @@ function LoginStepForm(props) {
     return(
         <Container>
             <Row>
-                <form>
+                <form onSubmit={props.verify}>
                     <p className="h5 text-center mb-4">Vérification de l'url de login</p>
                     <div className="grey-text">
                         <div className="md-form form-group">
@@ -93,7 +91,7 @@ function LoginStepForm(props) {
                         </div>
                     </div>
                     <div className="text-center">
-                        <button onClick={props.verify} type="button" className="btn red-color">Vérifier</button>
+                        <button type="submit" className="btn red-color">Vérifier</button>
                     </div>
                     <div className='sweet-loading text-center'>
                         <ClimbingBoxLoader

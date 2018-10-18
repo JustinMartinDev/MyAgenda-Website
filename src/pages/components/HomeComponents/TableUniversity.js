@@ -4,6 +4,7 @@ import constant from '../../../Constant.js';
 import RowUniversity from "./RowUniversity";
 import myAgendaAPI from "../../../utils/MyAgenda-API";
 import BoxMessage from "../utils/BoxMessage";
+import errorImg from "../../../images/404-Animation.gif";
 
 class TableUniversity extends Component {
     constructor(props) {
@@ -34,9 +35,9 @@ class TableUniversity extends Component {
     };
 
     componentDidMount() {
-        myAgendaAPI.redirectJSON(constant.myAgendaResURL + "resources.json", (result, hasError) => {
-            if (hasError)
-                this.notLoaded(result.error);
+        myAgendaAPI.redirectJSON(constant.myAgendaResURL + "resources.json", (result) => {
+            if (result.hasOwnProperty("error"))
+                this.notLoaded(result.message);
             else
                 this.hasBeenLoaded(result.message);
         });
@@ -46,7 +47,10 @@ class TableUniversity extends Component {
         const { error, errorMessage, isLoaded, universities } = this.state;
         if (error) {
             return (
-                <BoxMessage message={errorMessage} classColor="red lighten-1" />
+                <React.Fragment>
+                    <BoxMessage message={errorMessage} classColor="red lighten-1" />
+                    <img src={errorImg}/>
+                </React.Fragment>
             );
         }
         else if (!isLoaded) {
