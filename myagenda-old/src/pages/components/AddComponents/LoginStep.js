@@ -3,7 +3,7 @@ import {Row, Container} from 'mdbreact';
 import {ClimbingBoxLoader} from 'react-spinners';
 import { css } from 'react-emotion';
 import BoxMessage from '../utils/BoxMessage'
-import myAgendaAPI from "../../../utils/MyAgenda-API";
+import reqObj from '../../../utils/RequestObject';
 
 const override = css`
     position: relative;
@@ -26,30 +26,29 @@ class LoginStep extends Component{
     }
 
     login = () => {
-        event.preventDefault();
         let url = document.getElementById("idUrl2").value;
-        this.setState({
-            errorMessage: "no message",
-            error: false,
-            loading: true,
-            url: url
-        });
-        let params = {
-            "username" : document.getElementById("idIdentifiant").value,
-            "password" : document.getElementById("idPassword").value
-        };
-
-        myAgendaAPI.loginCAS(url, params, (result) => {
-           if(result.hasOwnProperty("error") || !result.logged)
-               this.notLogged(result.message);
-           else
-               this.hasBeenLogged();
-        });
+        if(url.includes("http")) {
+              reqObj.getHTMLPage(url, this);
+            this.setState({
+                errorMessage: "no message",
+                error: false,
+                loading: true,
+                url: url
+            });
+        }
+        else{
+            this.setState({
+                errorMessage: "URL non valide   ",
+                error: true,
+                loading: false,
+                url: ""
+            });
+        }
     };
 
-    htmlLoaded = (url, body) =>{
-       /* let html = response.body;
-        let header = response.header;*/
+    htmlLoaded = (url, response) =>{
+        let html = response.body;
+        let header = response.header;
 
         let ltInput = html.getElementsByName("lt")[0];
         var lt = "";
@@ -69,7 +68,7 @@ class LoginStep extends Component{
             "password" : document.getElementById("idPassword").value,
             "execution": execution
         };
-        //reqObj.login(url, params);
+        reqObj.login(url, params);
     };
     htmlError = (error) => {
         this.data = {
@@ -84,7 +83,7 @@ class LoginStep extends Component{
         });
     };
 
-    hasBeenLogged = () =>{
+    hasBeenLoged = () =>{
         this.setState({
             errorMessage: "no message",
             error: false,
@@ -92,7 +91,7 @@ class LoginStep extends Component{
         });
         this.props.handleNext();
     };
-    notLogged = (error) => {
+    notLoged = (error) => {
         this.data = {
             "url": this.props.url,
             "identifiant": this.props.identifiant,
@@ -125,7 +124,7 @@ function LoginStepForm(props) {
     return(
         <Container>
             <Row>
-                <form onSubmit={props.login}>
+                <form>
                     <p className="h5 text-center mb-4">Vérification de des login</p>
                     <div className="grey-text">
                         <div className="md-form form-group">
@@ -145,7 +144,7 @@ function LoginStepForm(props) {
                         </div>
                     </div>
                     <div className="text-center">
-                        <button type="submit" className="btn red-color">Vérifier</button>
+                        <button onClick={props.login} type="button" className="btn red-color">Vérifier</button>
                     </div>
                     <div className='sweet-loading text-center'>
                         <ClimbingBoxLoader
